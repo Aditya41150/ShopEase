@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../core/app_export.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/custom_icon_widget.dart';
@@ -14,6 +13,7 @@ import './widgets/product_rating_widget.dart';
 import './widgets/product_specifications_widget.dart';
 import './widgets/quantity_selector_widget.dart';
 
+
 class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({Key? key}) : super(key: key);
 
@@ -23,10 +23,9 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool _isLoading = true;
-  bool _hasError = false;
   int _quantity = 1;
   bool _isAddedToCart = false;
-  late Map<String, dynamic> _productData;
+  Map<String, dynamic>? _productData;
 
   @override
   void initState() {
@@ -37,69 +36,41 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Future<void> _fetchProductData() async {
     setState(() {
       _isLoading = true;
-      _hasError = false;
     });
-
-    // Simulate API call with delay
-    await Future.delayed(const Duration(seconds: 2));
-    
-    try {
-      _productData = {
-        "id": 1,
-        "name": "Premium Wireless Headphones",
-        "description": """Experience crystal-clear sound with our Premium Wireless Headphones. 
-        Featuring advanced noise cancellation technology, these headphones deliver an immersive audio experience whether you're commuting, working out, or relaxing at home.
-        
-        The ergonomic design ensures comfort during extended use, while the premium materials guarantee durability. With a battery life of up to 30 hours, you can enjoy your favorite music all day long.
-        
-        These headphones also come with touch controls for easy operation and a built-in microphone for hands-free calls. The sleek and modern design makes them a stylish accessory for any outfit.""",
-        "price": "\$299.99",
-        "originalPrice": "\$349.99",
-        "discount": "14%",
-        "rating": 4.7,
-        "reviewCount": 253,
-        "inStock": true,
-        "stockQuantity": 10,
-        "images": [
-          "https://m.media-amazon.com/images/I/61oqO1AMbdL._SL1500_.jpg",
-          "https://images.unsplash.com/photo-1577174881658-0f30ed549adc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-          "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-        ],
-        "specifications": [
-          {"name": "Brand", "value": "SoundMaster"},
-          {"name": "Model", "value": "SM-WH100"}, 
-          {"name": "Type", "value": "Over-ear"},
-          {"name": "Connectivity", "value": "Bluetooth 5.0"},
-          {"name": "Battery Life", "value": "30 hours"},
-          {"name": "Charging Time", "value": "2 hours"},
-          {"name": "Weight", "value": "250g"},
-          {"name": "Color", "value": "Matte Black"},
-          {"name": "Warranty", "value": "2 years"}
-        ],
-        "features": [
-          "Active Noise Cancellation",
-          "Touch Controls",
-          "Voice Assistant Support",
-          "Foldable Design",
-          "Fast Charging",
-          "Water Resistant (IPX4)"
-        ]
-      };
-      
-      setState(() {
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-        _hasError = true;
-      });
-    }
+    await Future.delayed(const Duration(seconds: 1));
+    // Use mock product data
+    _productData = {
+      "name": "Sample Product",
+      "price": "\$49.99",
+      "originalPrice": "\$59.99",
+      "discount": "17%",
+      "rating": 4.5,
+      "reviewCount": 123,
+      "stockQuantity": 10,
+      "inStock": true,
+      "description": "This is a sample product description.",
+      "images": [
+        "https://via.placeholder.com/300x200",
+        "https://via.placeholder.com/300x200?2"
+      ],
+      "specifications": [
+        {"Key": "Color", "Value": "Red"},
+        {"Key": "Size", "Value": "Medium"}
+      ],
+      "features": [
+        "High quality material",
+        "Ergonomic design",
+        "Affordable price"
+      ]
+    };
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   void _updateQuantity(int newQuantity) {
-    final int maxQuantity = _productData["stockQuantity"] as int;
-    
+    if (_productData == null) return;
+    final int maxQuantity = _productData!["stockQuantity"] as int;
     if (newQuantity >= 1 && newQuantity <= maxQuantity) {
       setState(() {
         _quantity = newQuantity;
@@ -108,12 +79,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   void _addToCart() {
-    if (_productData["inStock"] as bool) {
+    if (_productData == null) return;
+    if (_productData!["inStock"] as bool) {
       setState(() {
         _isAddedToCart = true;
       });
-      
-      // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -127,8 +97,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           behavior: SnackBarBehavior.floating,
         ),
       );
-      
-      // Reset button after 2 seconds
       Future.delayed(const Duration(seconds: 2), () {
         if (mounted) {
           setState(() {
@@ -137,7 +105,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         }
       });
     } else {
-      // Show error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -164,74 +131,79 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Product Details'),
-        leading: IconButton(
-          icon: const CustomIconWidget(
-            iconName: 'arrow_back',
-            color: AppTheme.textPrimary,
-            size: 24,
-          ),
-          onPressed: _navigateBack,
-        ),
-        actions: [
-          IconButton(
+    if (_isLoading) {
+      return const LoadingWidget();
+    }
+    if (_productData == null) {
+      return const Scaffold(
+        body: Center(child: Text('Error loading product data')),
+      );
+    }
+    try {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Product Details'),
+          leading: IconButton(
             icon: const CustomIconWidget(
-              iconName: 'shopping_cart',
+              iconName: 'arrow_back',
               color: AppTheme.textPrimary,
               size: 24,
             ),
-            onPressed: _navigateToCart,
+            onPressed: _navigateBack,
           ),
-          const SizedBox(width: 8),
-        ],
-      ),
-      body: _isLoading
-          ? const LoadingWidget()
-          : _hasError
-              ? ProductErrorWidget(onRetry: _fetchProductData)
-              : _buildProductDetails(),
-      bottomNavigationBar: _isLoading || _hasError
-          ? null
-          : _buildBottomBar(),
-    );
+          actions: [
+            IconButton(
+              icon: const CustomIconWidget(
+                iconName: 'shopping_cart',
+                color: AppTheme.textPrimary,
+                size: 24,
+              ),
+              onPressed: _navigateToCart,
+            ),
+            const SizedBox(width: 8),
+          ],
+        ),
+        body: _buildProductDetails(),
+        bottomNavigationBar: _buildBottomBar(),
+      );
+    } catch (e, stack) {
+      debugPrint('Error building ProductDetailScreen: \n'
+          'Error: \n'
+          ' [31m${e.toString()}\n' + stack.toString());
+      return Scaffold(
+        body: Center(child: Text('Error: ' + e.toString())),
+      );
+    }
   }
-
+  
   Widget _buildProductDetails() {
+    if (_productData == null) {
+      return const Center(child: Text('No product data available'));
+    }
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Product Image Carousel
           ProductImageCarouselWidget(
-            images: (_productData["images"] as List).map((item) => item as String).toList(),
+            images: (_productData!["images"] as List).map((item) => item as String).toList(),
           ),
-          
           Padding(
             padding: EdgeInsets.all(4.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Product Info (Name, Price)
                 ProductInfoWidget(
-                  name: _productData["name"] as String,
-                  price: _productData["price"] as String,
-                  originalPrice: _productData["originalPrice"] as String,
-                  discount: _productData["discount"] as String,
+                  name: _productData!["name"] as String,
+                  price: _productData!["price"] as String,
+                  originalPrice: _productData!["originalPrice"] as String,
+                  discount: _productData!["discount"] as String,
                 ),
-                
                 SizedBox(height: 2.h),
-                
-                // Product Rating
                 ProductRatingWidget(
-                  rating: _productData["rating"] as double,
-                  reviewCount: _productData["reviewCount"] as int,
+                  rating: (_productData!["rating"] as num).toDouble(),
+                  reviewCount: _productData!["reviewCount"] as int,
                 ),
-                
                 SizedBox(height: 3.h),
-                
-                // Quantity Selector
                 Row(
                   children: [
                     Text(
@@ -242,44 +214,34 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     QuantitySelectorWidget(
                       quantity: _quantity,
                       onChanged: _updateQuantity,
-                      maxQuantity: _productData["stockQuantity"] as int,
+                      maxQuantity: _productData!["stockQuantity"] as int,
                     ),
                     const Spacer(),
                     Text(
-                      _productData["inStock"] as bool
-                          ? '${_productData["stockQuantity"]} available'
+                      _productData!["inStock"] as bool
+                          ? '${_productData!["stockQuantity"]} available'
                           : 'Out of Stock',
                       style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
-                        color: _productData["inStock"] as bool
+                        color: _productData!["inStock"] as bool
                             ? AppTheme.success
                             : AppTheme.error,
                       ),
                     ),
                   ],
                 ),
-                
                 SizedBox(height: 3.h),
-                
-                // Product Description
                 ProductDescriptionWidget(
-                  description: _productData["description"] as String,
+                  description: _productData!["description"] as String,
                 ),
-                
                 SizedBox(height: 3.h),
-                
-                // Product Specifications
                 ProductSpecificationsWidget(
-                  specifications: (_productData["specifications"] as List)
-                      .map((item) => item as Map<String, dynamic>)
+                  specifications: (_productData!["specifications"] as List)
+                      .map((item) => Map<String, dynamic>.from(item as Map))
                       .toList(),
                 ),
-                
                 SizedBox(height: 3.h),
-                
-                // Product Features
                 _buildFeatures(),
-                
-                SizedBox(height: 10.h), // Extra space at bottom for scrolling
+                SizedBox(height: 10.h),
               ],
             ),
           ),
@@ -289,6 +251,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   Widget _buildFeatures() {
+    if (_productData == null) {
+      return const SizedBox.shrink();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -297,7 +262,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           style: AppTheme.lightTheme.textTheme.titleMedium,
         ),
         SizedBox(height: 1.h),
-        ...(_productData["features"] as List).map((feature) {
+        ...(_productData!["features"] as List).map((feature) {
           return Padding(
             padding: EdgeInsets.only(bottom: 1.h),
             child: Row(
@@ -324,6 +289,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   Widget _buildBottomBar() {
+    if (_productData == null) {
+      return const SizedBox.shrink();
+    }
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
       decoration: BoxDecoration(
@@ -348,7 +316,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   style: AppTheme.lightTheme.textTheme.bodySmall,
                 ),
                 Text(
-                  _productData["price"] as String,
+                  _productData!["price"] as String,
                   style: AppTheme.getPriceTextStyle(
                     isLight: true,
                     fontSize: 18,
@@ -361,7 +329,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: AddToCartButtonWidget(
                 onPressed: _addToCart,
                 isAddedToCart: _isAddedToCart,
-                isInStock: _productData["inStock"] as bool,
+                isInStock: _productData!["inStock"] as bool,
               ),
             ),
           ],

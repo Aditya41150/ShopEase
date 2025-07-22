@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
-import '../../core/app_export.dart';
 import './widgets/app_header_widget.dart';
 import './widgets/category_filter_widget.dart';
 import './widgets/error_widget.dart';
 import './widgets/product_grid_widget.dart';
-import 'widgets/app_header_widget.dart';
-import 'widgets/category_filter_widget.dart';
-import 'widgets/error_widget.dart';
-import 'widgets/product_grid_widget.dart';
 
 class ProductListingScreen extends StatefulWidget {
   const ProductListingScreen({Key? key}) : super(key: key);
@@ -32,23 +26,17 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
   void initState() {
     super.initState();
     _fetchProducts();
-    _scrollController.addListener(_scrollListener);
+    // _scrollController.addListener(_scrollListener); // Disable infinite scroll
   }
 
   @override
   void dispose() {
-    _scrollController.removeListener(_scrollListener);
+    // _scrollController.removeListener(_scrollListener); // Disable infinite scroll
     _scrollController.dispose();
     super.dispose();
   }
 
-  void _scrollListener() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200 &&
-        !_isLoading &&
-        _hasMoreData) {
-      _fetchMoreProducts();
-    }
-  }
+  // Remove or comment out _scrollListener and _fetchMoreProducts
 
   Future<void> _fetchProducts() async {
     if (_isLoading) return;
@@ -79,35 +67,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
     }
   }
 
-  Future<void> _fetchMoreProducts() async {
-    if (_isLoading || !_hasMoreData) return;
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      // Simulate API call with delay
-      await Future.delayed(const Duration(seconds: 2));
-      
-      // Increment page number for pagination
-      _page++;
-      
-      // Mock data for more products
-      final List<Map<String, dynamic>> fetchedProducts = _getMockProducts(_page);
-      
-      setState(() {
-        _products.addAll(fetchedProducts);
-        _isLoading = false;
-        _hasMoreData = fetchedProducts.length >= _productsPerPage;
-      });
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-        _hasError = true;
-      });
-    }
-  }
+  // Remove or comment out _fetchMoreProducts
 
   List<Map<String, dynamic>> _getMockProducts(int page) {
     // Filter products by category if needed
@@ -118,8 +78,8 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       {
         "id": 1 + ((page - 1) * _productsPerPage),
         "name": "Premium Wireless Headphones",
-        "price": "\$299.99",
-        "originalPrice": "\$349.99",
+        "price": "₹299.99",
+        "originalPrice": "₹349.99",
         "discount": "14%",
         "category": "Electronics",
         "isOnSale": true,
@@ -129,8 +89,8 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       {
         "id": 2 + ((page - 1) * _productsPerPage),
         "name": "Smart Watch Series 5",
-        "price": "\$199.99",
-        "originalPrice": "\$249.99",
+        "price": "₹199.99",
+        "originalPrice": "₹249.99",
         "discount": "20%",
         "category": "Electronics",
         "isOnSale": true,
@@ -140,8 +100,8 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       {
         "id": 3 + ((page - 1) * _productsPerPage),
         "name": "Designer Leather Handbag",
-        "price": "\$129.99",
-        "originalPrice": "\$159.99",
+        "price": "₹129.99",
+        "originalPrice": "₹159.99",
         "discount": "19%",
         "category": "Fashion",
         "isOnSale": true,
@@ -151,7 +111,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       {
         "id": 4 + ((page - 1) * _productsPerPage),
         "name": "Running Shoes Pro",
-        "price": "\$89.99",
+        "price": "₹89.99",
         "originalPrice": null,
         "discount": null,
         "category": "Sports",
@@ -162,8 +122,8 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       {
         "id": 5 + ((page - 1) * _productsPerPage),
         "name": "Smartphone X Pro",
-        "price": "\$899.99",
-        "originalPrice": "\$999.99",
+        "price": "₹899.99",
+        "originalPrice": "₹999.99",
         "discount": "10%",
         "category": "Electronics",
         "isOnSale": true,
@@ -173,7 +133,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       {
         "id": 6 + ((page - 1) * _productsPerPage),
         "name": "Stainless Steel Water Bottle",
-        "price": "\$24.99",
+        "price": "₹24.99",
         "originalPrice": null,
         "discount": null,
         "category": "Home",
@@ -184,8 +144,8 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       {
         "id": 7 + ((page - 1) * _productsPerPage),
         "name": "Wireless Bluetooth Speaker",
-        "price": "\$79.99",
-        "originalPrice": "\$99.99",
+        "price": "₹79.99",
+        "originalPrice": "₹99.99",
         "discount": "20%",
         "category": "Electronics",
         "isOnSale": true,
@@ -195,7 +155,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       {
         "id": 8 + ((page - 1) * _productsPerPage),
         "name": "Yoga Mat Premium",
-        "price": "\$45.99",
+        "price": "₹45.99",
         "originalPrice": null,
         "discount": null,
         "category": "Sports",
@@ -206,8 +166,8 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       {
         "id": 9 + ((page - 1) * _productsPerPage),
         "name": "Ceramic Coffee Mug Set",
-        "price": "\$34.99",
-        "originalPrice": "\$39.99",
+        "price": "₹34.99",
+        "originalPrice": "₹39.99",
         "discount": "13%",
         "category": "Home",
         "isOnSale": true,
@@ -217,8 +177,8 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       {
         "id": 10 + ((page - 1) * _productsPerPage),
         "name": "Designer Sunglasses",
-        "price": "\$149.99",
-        "originalPrice": "\$189.99",
+        "price": "₹149.99",
+        "originalPrice": "₹189.99",
         "discount": "21%",
         "category": "Fashion",
         "isOnSale": true,
@@ -249,7 +209,9 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
       context, 
       '/product-detail-screen',
       arguments: product,
-    );
+    ).then((_) {
+      debugPrint('ProductDetailScreen arguments: $product');
+    });
   }
 
   void _navigateToCart() {
@@ -264,7 +226,7 @@ class _ProductListingScreenState extends State<ProductListingScreen> {
           children: [
             // App Header with Logo, Search and Cart
             AppHeaderWidget(
-              cartItemCount: 3, // Mock cart item count
+              cartItemCount: 0, // Mock cart item count {Initally 0}
               onCartTap: _navigateToCart,
             ),
             

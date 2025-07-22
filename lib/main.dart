@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -9,23 +8,23 @@ import './core/utils/pref_utils.dart';
 import './routes/app_routes.dart';
 import './theme/app_theme.dart';
 import 'core/app_export.dart';
+import 'package:flutter/foundation.dart'; // For kIsWeb
 
 void main() async {
-  await dotenv.load();
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
   ErrorWidget.builder = (FlutterErrorDetails details) {
     return CustomErrorWidget(
       errorDetails: details,
     );
   };
-  Future.wait([
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-  ]).then((value) {
-    PrefUtils().init();
-    runApp( 
-      MyApp()
-      );
-  });
+  if (!kIsWeb) {
+    await Future.wait([
+      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+    ]);
+  }
+  PrefUtils().init();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, screenType) {
       return MaterialApp(
-        title: 'ecommerce_app',
+        title: 'Shop Ease',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.light,

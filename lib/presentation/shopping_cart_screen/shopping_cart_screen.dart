@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../core/app_export.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/custom_icon_widget.dart';
 import './widgets/cart_item_widget.dart';
 import './widgets/empty_cart_widget.dart';
 import './widgets/order_summary_widget.dart';
-import 'widgets/cart_item_widget.dart';
-import 'widgets/empty_cart_widget.dart';
-import 'widgets/order_summary_widget.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
   const ShoppingCartScreen({Key? key}) : super(key: key);
@@ -40,24 +36,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 
     try {
       // Mock cart data
-      final List<Map<String, dynamic>> cartItems = [
-        {
-          "productId": 1,
-          "name": "Premium Wireless Headphones",
-          "price": 299.99,
-          "quantity": 1,
-          "image": "https://m.media-amazon.com/images/I/61oqO1AMbdL._SL1500_.jpg",
-          "maxQuantity": 10,
-        },
-        {
-          "productId": 2,
-          "name": "Smart Watch Series 5",
-          "price": 249.99,
-          "quantity": 1,
-          "image": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-          "maxQuantity": 5,
-        },
-      ];
+      final List<Map<String, dynamic>> cartItems = [];
 
       // Calculate order summary
       double subtotal = 0;

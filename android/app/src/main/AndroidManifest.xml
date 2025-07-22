@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-            android:label="ShopEase"
+            android:label="Shop Ease"
             android:name="${applicationName}"
             android:icon="@mipmap/ic_launcher">
         <activity

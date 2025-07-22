@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:ui';
-import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefUtils {

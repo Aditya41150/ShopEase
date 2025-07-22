@@ -12,13 +12,6 @@ import './widgets/order_confirmation_widget.dart';
 import './widgets/order_summary_widget.dart';
 import './widgets/payment_method_selector.dart';
 import './widgets/shipping_address_form.dart';
-import 'widgets/checkout_button.dart';
-import 'widgets/credit_card_form.dart';
-import 'widgets/error_message_widget.dart';
-import 'widgets/order_confirmation_widget.dart';
-import 'widgets/order_summary_widget.dart';
-import 'widgets/payment_method_selector.dart';
-import 'widgets/shipping_address_form.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({Key? key}) : super(key: key);
