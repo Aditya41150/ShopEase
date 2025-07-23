@@ -24,7 +24,7 @@ class AppTheme {
   static const Color warning = Color(0xFFF59E0B); // Warning
   static const Color error = Color(0xFFDC2626); // Error
   static const Color info = Color(0xFF0EA5E9); // Info
-  static const Color sale = Color(0xFFE11D48); // Sale
+  static const Color sale = Color(0xFFE11D48); // Salea
 
   // Dark Theme Colors
   static const Color backgroundDark = Color(0xFF121212);
@@ -102,9 +102,9 @@ class AppTheme {
       ),
       iconTheme: IconThemeData(color: textPrimary),
     ),
-    
+
     // Card Theme
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: Colors.white,
       elevation: 2.0,
       shadowColor: shadowLight,
@@ -112,7 +112,7 @@ class AppTheme {
         borderRadius: BorderRadius.circular(12.0),
       ),
     ),
-    
+
     // Bottom Navigation Bar Theme
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: Colors.white,
@@ -301,9 +301,9 @@ class AppTheme {
         color: Colors.white,
       ),
     ),
-    
+
     // Tab Bar Theme
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: TabBarThemeData(
       labelColor: primaryColor,
       unselectedLabelColor: textSecondary,
       indicatorColor: primaryColor,
@@ -367,9 +367,9 @@ class AppTheme {
         side: BorderSide(color: border),
       ),
     ),
-    
+
     // Dialog Theme
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: Colors.white,
       elevation: 8,
       shape: RoundedRectangleBorder(
@@ -386,7 +386,7 @@ class AppTheme {
         color: textPrimary,
       ),
     ),
-    
+
     // Bottom Sheet Theme
     bottomSheetTheme: BottomSheetThemeData(
       backgroundColor: Colors.white,
@@ -471,9 +471,9 @@ class AppTheme {
       ),
       iconTheme: IconThemeData(color: textPrimaryDark),
     ),
-    
+
     // Card Theme
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: surfaceDark,
       elevation: 2.0,
       shadowColor: shadowDark,
@@ -481,7 +481,7 @@ class AppTheme {
         borderRadius: BorderRadius.circular(12.0),
       ),
     ),
-    
+
     // Bottom Navigation Bar Theme
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: surfaceDark,
@@ -670,9 +670,9 @@ class AppTheme {
         color: Colors.white,
       ),
     ),
-    
+
     // Tab Bar Theme
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: TabBarThemeData(
       labelColor: primaryLight,
       unselectedLabelColor: textSecondaryDark,
       indicatorColor: primaryLight,
@@ -738,7 +738,7 @@ class AppTheme {
     ),
     
     // Dialog Theme
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: surfaceDark,
       elevation: 8,
       shape: RoundedRectangleBorder(

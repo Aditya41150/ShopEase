@@ -3,12 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sizer/sizer.dart';
 import './widgets/custom_error_widget.dart';
-import './core/utils/navigator_service.dart';
-import './core/utils/pref_utils.dart';
-import './routes/app_routes.dart';
-import './theme/app_theme.dart';
 import 'core/app_export.dart';
-import 'package:flutter/foundation.dart'; // For kIsWeb
+import 'package:flutter/foundation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
